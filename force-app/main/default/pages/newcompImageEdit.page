@@ -1,0 +1,82 @@
+<apex:page >
+ 
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Image Crop and Rotate</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #image-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+
+<body>
+    <input type="file" id="fileInput" accept="image/*"/>
+    <div id="image-container">
+        <img id="image" src="" alt="Selected Image"/>
+    </div>
+    <div id="output">
+        <canvas id="resultCanvas"></canvas>
+    </div>
+
+    <script>
+        document.getElementById("fileInput").addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const image = new Image();
+                    image.src = event.target.result;
+                    image.onload = function () {
+                        const croppedCanvas = cropImage(image, 0, 0, 200, 200);
+                        drawText(croppedCanvas, "Hello, world!", 50, 50, "bold 20px Arial", "black");
+                        const rotatedCanvas = rotateImage(croppedCanvas, 45);
+                        document.getElementById("image").src = image.src;
+                        document.getElementById("resultCanvas").width = rotatedCanvas.width;
+                        document.getElementById("resultCanvas").height = rotatedCanvas.height;
+                        const resultCtx = document.getElementById("resultCanvas").getContext("2d");
+                        resultCtx.drawImage(rotatedCanvas, 0, 0);
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function cropImage(image, x, y, width, height) {
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(image, x, y, width, height);
+            return canvas;
+        }
+
+        function drawText(canvas, text, x, y, font, color) {
+            const ctx = canvas.getContext("2d");
+            ctx.font = font;
+            ctx.fillStyle = color;
+            ctx.fillText(text, x, y);
+        }
+
+        function rotateImage(canvas, angle) {
+            const rotatedCanvas = document.createElement("canvas");
+            const ctx = rotatedCanvas.getContext("2d");
+            rotatedCanvas.width = canvas.height;
+            rotatedCanvas.height = canvas.width;
+            ctx.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+            ctx.rotate((angle * Math.PI) / 180);
+            ctx.drawImage(canvas, -canvas.width / 2, -canvas.height / 2);
+            return rotatedCanvas;
+        }
+    </script>
+</body>
+</apex:page>

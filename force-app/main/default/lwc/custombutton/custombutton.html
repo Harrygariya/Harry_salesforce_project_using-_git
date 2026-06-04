@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="Loopup combobox with multi select">
+        <div onkeyup={handleKeyUp} class="slds-p-horizontal_medium">
+                <lightning-input name="enter-search" type="search" class="icon-right-css"
+                    placeholder="Search Firm, People or Deals" onblur={handleChange}
+                    value={value}>
+                </lightning-input>
+            </div>
+        <template if:true={islistvisible}>
+            <ul class="drop_ul slds-m-horizontal_medium">
+                <template for:each={finalOption} for:item='item'>
+                    <template if:true={item.isSelected}>
+                        <div key={item.value} class="slds-p-around_x-small dropLists"
+                            onclick={itemSelect}>
+                            <lightning-icon icon-name="standard:account" size="small">
+                            </lightning-icon>
+                            <li class="slds-nav-vertical__item " role="listitem">{item.value}</li>
+                        </div>
+                    </template>
+                    <template if:false={item.isSelected}>
+                        <div key={item.value} class="slds-p-around_x-small dropLists"
+                            onclick={itemSelect}>
+                            <lightning-icon icon-name="standard:account" size="small">
+                            </lightning-icon>
+                            <li class="slds-nav-vertical__item " role="listitem">{item.value}</li>
+                        </div>
+                    </template>
+                </template>
+            </ul>
+        </template>
+
+        <template if:true={isPills}>
+            <ul class="slds-list_horizontal">
+                <template for:each={tempOptions} for:item='e'>
+                    <li key={e.value}>
+                        <template if:true={e.isSelected}>
+                            <lightning-pill label={e.label} onremove={handleRemoveOnly}
+                                data-value={e.value} onclick={handleClick}>
+                                <lightning-icon icon-name={e.iconName}
+                                    alternative-text={e.label}>
+                                </lightning-icon>
+                            </lightning-pill>
+                            <!-- </div> -->
+
+                        </template>
+                    </li>
+                </template>
+            </ul>
+        </template>
+    </lightning-card>
+</template>

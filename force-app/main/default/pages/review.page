@@ -1,0 +1,236 @@
+<apex:page sidebar="false" standardStylesheets="false" docType="html-5.0"   renderAs="pdf">
+
+    
+    <table>
+      <tr>
+        <th style="width: 350px;"></th>
+        <th style="width: 350px"></th>
+        <th style="width: 350px"></th>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+
+            <p>
+            <span style="color: rgb(78, 78, 224); margin-right: 5px"
+              >Lab ID</span
+            >397622241
+          </p>
+          </td>
+          <td>
+          <p >
+            <span style="color: rgb(78, 78, 224); margin-right: 5px">DOB</span
+            >01/01/2001 (23 Yrs FEMALE)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td><p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px"
+            >Referrer</span
+          >Dr Doctor Test
+        </p>
+        </td>
+        <td><p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px"
+            >Your ref</span
+          >
+        </p></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+        <p>
+          <span
+            style="
+              padding-top: 15px;
+              color: rgb(78, 78, 224);
+              margin-right: 5px;
+            "
+            >Address</span
+          >
+          MELBOURNE PATHOLOGY 103 VICTORIA PDE COLLINGWOOD VIC 3066</p>
+        </td>
+        <td><p>
+          <span
+            style="
+              padding-top: 15px;
+              color: rgb(78, 78, 224);
+              margin-right: 5px;
+            "
+            >Address</span
+          >
+          103 VICTORIA PARADE COLLINGWOOD VIC 3066
+        </p></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px">Phone</span
+          >0392877700
+        </p></td>
+        <td><p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px">Phone</span
+          >0415884172
+        </p></td>
+        
+      </tr>
+      <td></td>
+    </table>
+    <hr style="border-color: rgb(157, 157, 233)" />
+  <table>
+    <tr>
+      <th style="width: 350px"></th>
+      <th style="width: 350px"></th>
+      <th style="width: 350px"></th>
+    </tr>
+    <tr>
+      <td>
+        <p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px"
+            >Copy to</span
+          >
+        </p>
+      </td>
+      <td>
+        <p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px"
+            >Requested</span
+          >16/02/2024
+        </p>
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px"
+            >Clinical Notes
+          </span>
+        </p>
+      </td>
+      <td>
+        <p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px"
+            >Collected</span
+          >16/02/2024 09:55
+        </p>
+      </td>
+      <td>
+        <p>
+          <span style="color: rgb(78, 78, 224); margin-right: 5px"
+            >Received</span
+          >16/02/2024 09:55
+        </p>
+      </td>
+    </tr>
+  </table>
+  <hr style="border: 2px solid rgb(98, 98, 231)" />
+    <h5>Comments</h5>
+  <p>LIPID TARGET LEVELS:</p>
+  <p>
+    The treatment target levels for people at high risk of cardiovascular
+    disease are:
+  </p>
+  
+
+  <table width="70">
+    <thead>
+        <tr>
+            <th>Test Name</th>
+            <th class="result-header">Result</th>
+            <th>Units</th>
+            <th>Reference Interval</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>S Cholesterol:</td>
+            <td class="result-header">4.0</td>
+            <td>mmol/L</td>
+            <td>3.5 - 5.5</td>
+        </tr>
+        <tr>
+            <td>S Triglycerides:</td>
+            <td class="result-header">1.0</td>
+            <td>mmol/L</td>
+            <td>1.5</td>
+        </tr>
+        <tr>
+            <td>S HDL-Cholesterol:</td>
+            <td class="result-header">1.50</td>
+            <td>mmol/L</td>
+            <td>1.20</td>
+        </tr>
+        <tr>
+            <td>S LDL-Cholesterol:</td>
+            <td class="result-header">2.0</td>
+            <td>mmol/L</td>
+            <td>3.5</td>
+        </tr>
+        <tr>
+            <td>Chol/HDLC</td>
+            <td class="result-header">2.7</td>
+            <td>mmol/L</td>
+            <td>4.5</td>
+        </tr>
+        <tr>
+            <td>Non HDL Cholesterol</td>
+            <td class="result-header">2.5</td>
+            <td>mmol/L</td>
+            <td>3.9</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 style="color: rgb(98, 98, 231)">Comments</h2>
+<p style="color: rgb(98, 98, 231)">LIPID TARGET LEVELS:</p>
+
+<p style="color: rgb(98, 98, 231)">The treatment target levels for people at high risk of cardiovascular
+  disease are</p>
+
+
+
+  <table width="70">
+   
+    <tbody>
+        <tr>
+            <td>Total Cholesterol:</td>
+            <td>&lt;4.0 mmol/L</td>
+        </tr>
+        <tr>
+            <td>Fasting Triglycerides</td>
+            <td class="result-header"> &lt;2.0 mmol/L</td>
+            
+        </tr>
+        <tr>
+            <td> HDL-Cholesterol:</td>
+            <td class="result-header">1.00 mmol/L</td>
+            
+        </tr>
+        <tr>
+            <td>S LDL-Cholesterol:</td>
+            <td class="result-header"> &lt; 2.5 mmol/L (&lt; 1.8 mmol/L if very high risk)</td>
+            
+        </tr>
+        <tr>
+            <td>Non–HDL Cholesterol</td>
+            <td class="result-header"> &lt; 3.3 mmol/L (&lt; 2.5 mmol/L if very high risk)</td>
+            
+        </tr>
+       
+    </tbody>
+</table>
+<p>Source: AACB Harmonised Lipid Reporting Guideline – 2018.</p>
+<p>Risk Calculator available at www.cvdcheck.org.au</p>
+
+<p>Department Supervising Pathologist: Dr Ken Sikaris</p>
+<p>MELBOURNE PATHOLOGY NATA NO.:2133</p>
+<p>Reported on 16–02–2024 09:56</p>
+
+
+  
+  
+    
+</apex:page>

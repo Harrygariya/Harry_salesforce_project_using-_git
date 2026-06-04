@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Dynamic URL Data Fetcher" icon-name="utility:refresh">
+        <template if:true={data}>
+            <div>
+                <p>Response: {data}</p>
+            </div>
+        </template>
+        <template if:true={error}>
+            <div class="slds-text-color_error">
+                <p>Error: {error.body}</p>
+            </div>
+        </template>
+        <a href="https://ww1.your-api-endpoint.com/">hiiiiii</a>
+    </lightning-card>
+</template>

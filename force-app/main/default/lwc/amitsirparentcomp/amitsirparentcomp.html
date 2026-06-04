@@ -1,0 +1,39 @@
+<template>
+hii im amit kumar
+<lightning-button onclick={handleClick}  label={myBtnlabel} data-donkey="donkeysAreKewl" data-turtle="NinjaTurtles"></lightning-button>
+<lightning-input onchange={inputonchange}></lightning-input>
+<h5>
+    {user_data.name} and {user_data.address.city}
+</h5>
+<!-- <lightning-button onclick={handleClick}  label={myBtnlabelhide}></lightning-button> -->
+
+
+<template if:true = {showchild}>
+    <c-childoneamit sendtochild={address}></c-childoneamit>
+
+</template>
+<!-- <c-childcomp></c-childcomp> -->
+
+
+
+<!-- code for progress bar  -->
+
+<!-- <div>
+    <span class="label">{sentiment} </span>
+    <div class="bar-container">
+        <div class="negetive"></div>
+         <div class="positive"></div>
+          <div class={barClass}></div>
+    </div>
+
+</div> -->
+
+  <div class="progress-bar-container">
+    <template for:each={orderedBars} for:item="bar">
+      <div key={bar.label} class={bar.class} style={bar.style}></div>
+    </template>
+  </div>
+
+
+
+</template>

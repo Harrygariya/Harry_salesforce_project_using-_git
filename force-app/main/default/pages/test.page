@@ -1,0 +1,35 @@
+<apex:page >
+    <apex:includeLightning />
+ 
+  <!-- End Default Content REMOVE THIS -->
+         <button onclick="notifyAura()">Click to highlight Utility Bar</button>
+
+     <div id="lightning-out-container" />
+  <script>
+    function notifyAura() {
+        const msg = {
+           type: 'VF_TO_AURA_EVENT',
+                payload: {
+                    status: 'success',
+                    message: 'Hello from Visualforce!'
+                }
+        };
+        	window.parent.postMessage(msg, "*"); // Send message to parent (Aura utility component)
+        }
+    	// 3. Use Lightning Out to create and inject the component
+        // Replace 'c:YourLightningOutApp' with the name of your dependency app.
+        $Lightning.use("c:APPUBAR", function() { // App Dependency
+            console.log('VF Page: Lightning Out app loaded.');
+            $Lightning.createComponent(
+                "c:UBarTest", // Component to create
+                {}, // Attributes for the component
+                "lightning-out-container", // DOM element to inject into
+                function(cmp) {
+                    console.log('VF Page: InnerAuraComponent has been created and placed.');
+                }
+            );
+        });
+   
+  
+  </script>
+</apex:page>

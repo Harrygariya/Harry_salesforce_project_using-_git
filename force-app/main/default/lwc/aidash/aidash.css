@@ -1,0 +1,180 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+     background-image: linear-gradient(to right top, #21939e, #00859e, #00779c, #006898, #005890, #3c4b86, #553c76, #642d60, #702542, #6b2826, #5c3111, #463907); /* Dark background from HyperChat-like UI */
+    color: #FFFFFF;
+    font-family: 'Salesforce Sans', Arial, sans-serif;
+}
+
+/* LEFT PANEL */
+.left-panel {
+    width: 18%;
+    padding: 1.5rem;
+    background-color: #1B232D; /* Slightly lighter/darker variant */
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+}
+
+.app-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.search-container {
+    margin-bottom: 1rem;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.nav-menu li:hover {
+    background-color: #2A3340;
+}
+
+.nav-menu li.active {
+    background-color: #2A3340;
+}
+
+.nav-icon {
+    --sds-c-icon-color-foreground-default: #FFFFFF;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    background-color: #2A3340;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.user-profile:hover {
+    background-color: #333D4C;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+	background-image: url('https://static.vecteezy.com/system/resources/previews/009/635/666/large_2x/wave-lines-flowing-dynamic-artificial-intelligence-deep-learning-visualization-networks-concept-for-ai-music-sound-illustration-vector.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+	background: relative;
+}
+
+/* HEADER SECTION */
+.header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.header p {
+    color: #b3b3b3;
+    margin-bottom: 2rem;
+}
+
+/* STATS CARDS */
+.stats-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    flex: 1;
+    background-color: #1B232D;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.stat-card p {
+    font-size: 0.9rem;
+    color: #b3b3b3;
+}
+
+/* BOT FORM */
+.bot-form {
+    background-color: #102238c2;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    gap: 10px;
+    height: 100%;
+	
+}
+
+
+.bot-form h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.bot-form p {
+    font-size: 0.9rem;
+    color: #b3b3b3;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+	width: 44%;
+}
+
+.form-input {
+    width: 100%;
+}
+
+/* Override input backgrounds for dark mode */
+lightning-input input,
+lightning-combobox .slds-combobox__input,
+lightning-textarea textarea {
+    background-color: #2A3340 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #3A4454;
+    border-radius: 6px;
+}
+
+/* ACTION BUTTONS */
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.action-buttons lightning-button {
+    --sds-c-button-color-background-brand: #5A67D8;
+    --sds-c-button-color-background-brand-hover: #4C51BF;
+}

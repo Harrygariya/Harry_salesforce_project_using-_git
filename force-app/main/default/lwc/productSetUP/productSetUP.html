@@ -1,0 +1,58 @@
+<template>
+  <form onsubmit={submitHandler} class="slds-p-around_medium slds-card">
+
+   <lightning-layout multiple-rows>
+      <lightning-layout-item size="6" class="slds-p-around_xx-small">
+        <lightning-input class="slds_input" type="text" label="product category" name="category" oninput={onInputChange}></lightning-input>
+      </lightning-layout-item>
+      <lightning-layout-item size="6" class="slds-p-around_xx-small">
+        <lightning-input class="slds_input" type="text"  label="sub product category" name="subCategory" ></lightning-input>
+      </lightning-layout-item>
+      <lightning-layout-item size="6" class="slds-p-around_xx-small">
+        <lightning-input class="slds_input" type="text" label="product discription"></lightning-input>
+
+      </lightning-layout-item>
+      <lightning-layout-item size="12" class="slds-p-around_xx-small">
+        <lightning-layout>
+           
+               <lightning-layout-item size="3" class="slds-p-around_xx-small"  >
+                <p>add features</p>
+                   <lightning-button label="add features +" > </lightning-button>
+              </lightning-layout-item>
+
+              <lightning-layout-item size="4" class="slds-p-around_xx-small"  >
+                   <lightning-input class="slds_input" type="text" label="add feature 2"></lightning-input>
+              </lightning-layout-item>
+              
+                <lightning-layout-item size="4" class="slds-p-around_xx-small" >
+                    <lightning-input class="slds_input" type="text" label="add feature 3"></lightning-input>
+
+                </lightning-layout-item>
+
+
+        </lightning-layout>
+        
+      </lightning-layout-item>
+      <lightning-layout-item size="12" class="slds-p-around_xx-small">
+        <lightning-input class="slds_input" type="number" label="Price" name="price"></lightning-input>
+
+      </lightning-layout-item>
+      <lightning-layout-item size="12" class="slds-p-around_xx-small">
+        <lightning-input class="slds_input" type="file" label="image" name="image"></lightning-input>
+
+      </lightning-layout-item>
+
+
+      <lightning-layout-item size="12" class="slds-p-around_xx-small">
+        <lightning-button variant="brand" label="Button Field" title="Button Field" type="submit" ></lightning-button>
+      </lightning-layout-item>
+    </lightning-layout>
+
+
+
+
+
+  </form>
+
+ 
+</template>

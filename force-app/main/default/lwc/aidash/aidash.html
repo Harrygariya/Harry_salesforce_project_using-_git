@@ -1,0 +1,164 @@
+<template>
+    <div class="container">
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
+            <div class="app-title">HyperChat</div>
+            
+            <!-- <div class="search-container">
+                <lightning-input
+                    type="search"
+                    placeholder="Search..."
+                    label="Search"
+                    variant="label-hidden">
+                </lightning-input>
+            </div> -->
+
+            <!-- Navigation / List -->
+            <nav class="nav-menu">
+                <ul>
+                    <li class="active">
+                        <lightning-icon icon-name="utility:custom_apps" size="small" class="nav-icon"></lightning-icon>
+                        <span>Dashboard</span>
+                    </li>
+                    <li>
+                        <lightning-icon icon-name="utility:custom_apps" size="small" class="nav-icon"></lightning-icon>
+                        <span>Analytics</span>
+                    </li>
+                    <li>
+                        <lightning-icon icon-name="utility:world" size="small" class="nav-icon"></lightning-icon>
+                        <span>Public</span>
+                    </li>
+                    <li>
+                        <lightning-icon icon-name="utility:custom_apps" size="small" class="nav-icon"></lightning-icon>
+                        <span>Welfare</span>
+                    </li>
+                    <li>
+                        <lightning-icon icon-name="utility:warning" size="small" class="nav-icon"></lightning-icon>
+                        <span>Emergency</span>
+                    </li>
+                    <li>
+                        <lightning-icon icon-name="utility:email" size="small" class="nav-icon"></lightning-icon>
+                        <span>Contact</span>
+                    </li>
+                    <li>
+                        <lightning-icon icon-name="utility:settings" size="small" class="nav-icon"></lightning-icon>
+                        <span>Settings</span>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-profile">
+                <lightning-icon icon-name="utility:user" size="small"></lightning-icon>
+                <span>John Doe</span>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <!-- <div class="header">
+                <h1>Welcome back, John</h1>
+                <p>Measure your advertising ROI and track website traffic.</p>
+            </div> -->
+
+            <!-- Example Cards (Stats) -->
+            <!-- <div class="stats-container">
+                <div class="stat-card">
+                    <h2>50.8K</h2>
+                    <p>Monthly users</p>
+                </div>
+                <div class="stat-card">
+                    <h2>23.6K</h2>
+                    <p># of conversations</p>
+                </div>
+                <div class="stat-card">
+                    <h2>756</h2>
+                    <p>Avg session</p>
+                </div>
+                <div class="stat-card">
+                    <h2>$2.3K</h2>
+                    <p>Sales analytics</p>
+                </div>
+            </div> -->
+
+            <!-- AI Bot Form Section -->
+            <div class="bot-form">
+               
+
+                <!-- Bot Name -->
+                <div class="form-group">
+                    <lightning-input 
+                        type="text" 
+                        label="Bot Name"
+                        placeholder="Enter Bot Name"
+                        class="form-input">
+                    </lightning-input>
+                </div>
+
+                <!-- Public URL -->
+                <div class="form-group">
+                    <lightning-input 
+                        type="url" 
+                        label="Public URL" 
+                        placeholder="Enter Public URL"
+                        class="form-input">
+                    </lightning-input>
+                </div>
+
+                <!-- Select iText -->
+                <div class="form-group">
+                    <lightning-combobox
+                        name="iText"
+                        label="Select iText"
+                        placeholder="Select iText"
+                        options={iTextOptions}
+                        class="form-input">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Select Channel -->
+                <div class="form-group">
+                    <lightning-combobox
+                        name="channel"
+                        label="Select Channel"
+                        placeholder="Select Channel"
+                        options={channelOptions}
+                        class="form-input">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Select Number -->
+                <div class="form-group">
+                    <lightning-combobox
+                        name="number"
+                        label="Select Number"
+                        placeholder="Select Number"
+                        options={numberOptions}
+                        class="form-input">
+                    </lightning-combobox>
+                </div>
+
+                <!-- Instructions -->
+                <div class="form-group">
+                    <lightning-textarea
+                        label="Instructions"
+                        placeholder="Enter instructions"
+                        class="form-input">
+                    </lightning-textarea>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <lightning-button 
+                        variant="neutral" 
+                        label="Cancel">
+                    </lightning-button>
+                    <lightning-button 
+                        variant="brand" 
+                        label="Save"
+                        onclick={handleSave}>
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

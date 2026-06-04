@@ -1,0 +1,22 @@
+<template>
+    <span class="mycls"></span>
+  
+    <lightning-button  onclick={chagelbl} label={lblvalue}></lightning-button>
+    <lightning-button></lightning-button>
+
+    <template if:true={dtshow} >
+        <lightning-card title="lightningdatatable">
+            <lightning-datatable onrowselection={handleRowActions} key-field="id" columns={col} data={dt}  ></lightning-datatable>
+            <lightning-input class="myinput" onchange={handleChange} label="search" value={searchKey}></lightning-input>
+            
+        </lightning-card>
+        
+    </template>
+   
+
+    <!-- <div class="maindiv">
+        <div class="div1">dd djncd cjdcd cdj </div>
+        <div class="div2"> jdjsdejdb</div>
+
+    </div> -->
+</template>

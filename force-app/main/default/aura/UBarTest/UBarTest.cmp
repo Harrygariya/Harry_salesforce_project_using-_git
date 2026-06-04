@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="highlighted" type="Boolean" default="false"/>
+   
+
+    <!-- Button to simulate highlight action -->
+    <lightning:utilityBarAPI aura:id = "utilitybar" />
+    <lightning:button label="Highlight Utility Bar" onclick="{!c.toggleHighlight}" />
+
+    <aura:if isTrue="{!v.highlighted}">
+        <div class="slds-box slds-theme_alert-texture slds-theme_alert-texture_warning">
+            <strong>Attention: New Notification!</strong>
+        </div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,666 @@
+<apex:page showHeader="false" sidebar="false" title="imageEditer">
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8"></meta>
+    <!-- <title>Image Editor</title> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"></link>
+    <link rel="stylesheet" href="https://unpkg.com/cropperjs/dist/cropper.min.css"></link>
+    <script src="https://unpkg.com/cropperjs/dist/cropper.min.js"></script>
+    <style>
+         body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f3f3f3;
+    }
+        .cropper-container {
+      width: 400px;
+      height: auto;
+      border: 2px dashed #ccc;
+    /* overflow: hidden;*/
+      position: relative;
+    }
+    /*.file-input {
+      display: none;
+    }*/
+    /*.choose-btn {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #6C757D;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }*/
+    </style>
+         
+  </head>
+  <body>
+    <div class="container disable">
+        <h2>Image Editor</h2>
+        <div class="wrapper">
+            <div class="editor-panel">
+                <div class="filter">
+                    <label class="title">Filters</label>
+                    <div class="options">
+                        <button id="brightness" class="active">Brightness</button>
+                        <button id="saturation">Saturation</button>
+                        <button id="inversion">Inversion</button>
+                        <button id="grayscale">Grayscale</button>
+                    </div>
+                    <div class="slider">
+                        <div class="filter-info">
+                            <p class="name">Brighteness</p>
+                            <p class="value">100%</p>
+                        </div>
+                        <input type="range" value="100" min="0" max="200"/>
+                    </div>
+                </div>
+                <div class="rotate">
+                    <label class="title">Rotate Flip</label>
+                    <div class="options">
+                        <button id="left"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button id="right"><i class="fa-solid fa-rotate-right"></i></button>
+                        <button id="horizontal"><i class='bx bx-reflect-vertical'></i></button>
+                        <button id="vertical"><i class='bx bx-reflect-horizontal' ></i></button>
+                    </div>
+                </div>
+                <button id="draw">Draw</button>
+                <button class="crop-btn">Crop</button>
+                <button class="remove-crop">remove</button>
+                <!-- text are code  -->
+                    <button onclick="toggleInputField()">Add Text</button>
+                    <!-- <input type="text" id="inputText" style="display: none;">  -->
+                    <input type="text" id="inputText"  placeholder="Enter text..."/>
+                    <input type="color" id="textColorPicker" value="#000000"/>
+                    <button onclick="addText()">Submit</button>
+                    <button onclick="removeText()">Remove Text</button>
+                    <!-- <p id="displayArea"></p> -->
+            </div>
+            <div class="cropper-container">
+                  <div class="preview-img">
+                    <img id="image" src="image-placeholder.svg" alt="preview-img"/>  
+                     <p id="displayArea" style="position: absolute; width:auto;font-size: xx-large;cursor: move;"></p> 
+                  </div>
+                       <!-- Drawing Container -->
+                <div class="drawing-container">
+                    <div id="drawingContainer">
+                        <input type="color" id="colorPicker" value="#000000"/>
+                        <input type="range" id="thickness" min="1" max="10" value="3"/>
+                        <canvas id="canvas" width="377px" height="255px"></canvas>
+                    </div>
+                     <button id="save-drawing">Save Drawing Changes</button>
+                     <button id="reset-drawing">Reset Drawing</button>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <button class="reset-filter">Reset Filters</button>
+            <div class="row">
+                <input type="file" class="file-input" accept="image/*" />
+                <button class="choose-img">Choose Image</button>
+                <button class="save-img">Save Image</button>
+                <!-- <input type="file" class="file-input" accept="image/*" onchange="loadImage(event)">
+                <button class="choose-btn" onclick="chooseImage()">Choose Image</button> -->
+            </div>
+        </div>
+    </div>
+   
+    <!-- <script src="script.js"></script> -->
+    
+  </body>
+  
+  <style>
+  /* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600 ;display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  display: flex;
+  padding: 10px;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #E3F2FD;
+}
+.container{
+  width: 850px;
+  padding: 30px 35px 35px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.container.disable .editor-panel,
+.container.disable .controls .reset-filter,
+.container.disable .controls .save-img{
+  opacity: 0.5;
+  pointer-events: none;
+}
+.container h2{
+  margin-top: -8px;
+  font-size: 22px;
+  font-weight: 500;
+}
+.container .wrapper{
+  display: flex;
+  margin: 20px 0;
+  min-height: 335px;
+}
+.wrapper .editor-panel{
+  padding: 15px 20px;
+  width: 280px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.editor-panel .title{
+  display: block;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+.editor-panel .options, .controls{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.editor-panel button{
+  outline: none;
+  height: 40px;
+  font-size: 14px;
+  color: #6C757D;
+  background: #fff;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  border: 1px solid #aaa;
+}
+.editor-panel .filter button{
+  width: calc(100% / 2 - 4px);
+}
+.editor-panel button:hover{
+  background: #f5f5f5;
+}
+.filter button.active{
+  color: #fff;
+  border-color: #5372F0;
+  background: #5372F0;
+}
+.filter .slider{
+  margin-top: 12px;
+}
+.filter .slider .filter-info{
+  display: flex;
+  color: #464646;
+  font-size: 14px;
+  justify-content: space-between;
+}
+.filter .slider input{
+  width: 100%;
+  height: 5px;
+  accent-color: #5372F0;
+}
+.editor-panel .rotate{
+  margin-top: 17px;
+}
+.editor-panel .rotate button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 4 - 3px);
+}
+.rotate .options button:nth-child(3),
+.rotate .options button:nth-child(4){
+  font-size: 18px;
+}
+.rotate .options button:active{
+  color: #fff;
+  background: #5372F0;
+  border-color: #5372F0;
+}
+.wrapper .preview-img{
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
+  margin-left: 20px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.preview-img img{
+  max-width: 490px;
+  max-height: 335px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.controls button{
+  padding: 11px 20px;
+  font-size: 14px;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+  background: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+.controls .reset-filter{
+  color: #6C757D;
+  border: 1px solid #6C757D;
+}
+.controls .reset-filter:hover{
+  color: #fff;
+  background: #6C757D;
+}
+.controls .choose-img{
+  background: #6C757D;
+  border: 1px solid #6C757D;
+}
+.controls .save-img{
+  margin-left: 5px;
+  background: #5372F0;
+  border: 1px solid #5372F0;
+}
+
+@media screen and (max-width: 760px) {
+  .container{
+    padding: 25px;
+  }
+  .container .wrapper{
+    flex-wrap: wrap-reverse;
+  }
+  .wrapper .editor-panel{
+    width: 100%;
+  }
+  .wrapper .preview-img{
+    width: 100%;
+    margin: 0 0 15px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .controls button{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .controls .row{
+    width: 100%;
+  }
+  .controls .row .save-img{
+    margin-left: 0px;
+  }
+}
+
+    /* Styles for the drawing canvas */
+    #drawingContainer {
+      position: absolute;
+      z-index: 1; /* Add this line to place the drawing canvas above the preview image */
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px;
+      top:-75px;
+      left:10px;
+    }
+ 
+    .drawing-container {
+        display: none;
+    }
+
+    #inputText {
+        display: none;
+    }
+     
+     .text-section {
+      display: none;
+      margin-top: 10px;
+    }
+    
+    button#save-drawing{
+        font-size: 12px !important
+    }
+    button#reset-drawing{
+        font-size: 12px !important
+    }
+
+  </style>
+
+  <script>
+const fileInput = document.querySelector(".file-input"),
+filterOptions = document.querySelectorAll(".filter button"),
+filterName = document.querySelector(".filter-info .name"),
+filterValue = document.querySelector(".filter-info .value"),
+filterSlider = document.querySelector(".slider input"),
+rotateOptions = document.querySelectorAll(".rotate button"),
+previewImg = document.querySelector(".preview-img img"),
+resetFilterBtn = document.querySelector(".reset-filter"),
+chooseImgBtn = document.querySelector(".choose-img"),
+saveImgBtn = document.querySelector(".save-img");
+
+let brightness = "100", saturation = "100", inversion = "0", grayscale = "0";
+let rotate = 0, flipHorizontal = 1, flipVertical = 1;
+let cropper;
+ const loadImage = (event) => {
+  const fileInput = event ? event.target : document.querySelector(".file-input");
+  const file = fileInput.files[0];
+
+  if (!file) return;
+
+  previewImg.src = URL.createObjectURL(file);
+    previewImg.addEventListener("load", () => {
+        resetFilterBtn.click();
+        document.querySelector(".container").classList.remove("disable");
+    });
+
+    
+  
+};
+const removeCrop = (event) => {
+    if (cropper) {
+      cropper.destroy();
+    }
+};
+
+const cropImage = (event) => {
+    const image = document.getElementById("image");
+    // Initialize Cropper
+    if (cropper) {
+      cropper.destroy();
+    }
+    cropper = new Cropper(image, {
+      aspectRatio: 4 / 3, // Change the aspect ratio as per your requirement
+      viewMode: 1, // Restrict the crop box to within the container
+      dragMode: "move", // Enable dragging the cropper box
+      autoCropArea: 1, // Show the whole image in the cropper box by default
+    });
+    //toggleInputField();
+};
+
+// Add event listener for the file input change
+document.querySelector(".crop-btn").addEventListener("click", cropImage);
+document.querySelector(".remove-crop").addEventListener("click", removeCrop);
+const applyFilter = () => {
+    previewImg.style.transform = `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;
+    previewImg.style.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
+}
+
+filterOptions.forEach(option => {
+    option.addEventListener("click", () => {
+        document.querySelector(".active").classList.remove("active");
+        option.classList.add("active");
+        filterName.innerText = option.innerText;
+
+        if(option.id === "brightness") {
+            filterSlider.max = "200";
+            filterSlider.value = brightness;
+            filterValue.innerText = `${brightness}%`;
+        } else if(option.id === "saturation") {
+            filterSlider.max = "200";
+            filterSlider.value = saturation;
+            filterValue.innerText = `${saturation}%`
+        } else if(option.id === "inversion") {
+            filterSlider.max = "100";
+            filterSlider.value = inversion;
+            filterValue.innerText = `${inversion}%`;
+        } else {
+            filterSlider.max = "100";
+            filterSlider.value = grayscale;
+            filterValue.innerText = `${grayscale}%`;
+        }
+    });
+});
+
+const updateFilter = () => {
+    filterValue.innerText = `${filterSlider.value}%`;
+    const selectedFilter = document.querySelector(".filter .active");
+
+    if(selectedFilter.id === "brightness") {
+        brightness = filterSlider.value;
+    } else if(selectedFilter.id === "saturation") {
+        saturation = filterSlider.value;
+    } else if(selectedFilter.id === "inversion") {
+        inversion = filterSlider.value;
+    } else {
+        grayscale = filterSlider.value;
+    }
+    applyFilter();
+}
+
+rotateOptions.forEach(option => {
+    option.addEventListener("click", () => {
+        if(option.id === "left") {
+            rotate -= 90;
+        } else if(option.id === "right") {
+            rotate += 90;
+        } else if(option.id === "horizontal") {
+            flipHorizontal = flipHorizontal === 1 ? -1 : 1;
+        } else {
+            flipVertical = flipVertical === 1 ? -1 : 1;
+        }
+        applyFilter();
+    });
+});
+
+const resetFilter = () => {
+    brightness = "100"; saturation = "100"; inversion = "0"; grayscale = "0";
+    rotate = 0; flipHorizontal = 1; flipVertical = 1;
+    filterOptions[0].click();
+    applyFilter();
+}
+
+const saveImage = () => {
+    const canvas = document.createElement("canvas");
+    
+    const ctx = canvas.getContext("2d");
+    canvas.width = previewImg.naturalWidth;
+    canvas.height = previewImg.naturalHeight;
+    
+    ctx.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    if(rotate !== 0) {
+        ctx.rotate(rotate * Math.PI / 180);
+    }
+    ctx.scale(flipHorizontal, flipVertical);
+    ctx.drawImage(previewImg, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+     // Draw the text on the canvas
+    const text = displayArea.textContent;
+    ctx.font = "30px Arial";
+    ctx.fillStyle = textColorPicker.value; // Use the selected color from the color picker
+    ctx.textAlign = "center";
+    ctx.fillText(text, 10, canvas.height -100);
+
+    // Draw the cropped image on the canvas (if available)
+    if (cropper) {
+      
+      const croppedCanvas = cropper.getCroppedCanvas();
+      // Get the context of the cropped canvas
+  const ctx = croppedCanvas.getContext("2d");
+     const text = displayArea.textContent;
+    ctx.font = "30px Arial";
+    ctx.fillStyle = textColorPicker.value; // Use the selected color from the color picker
+    ctx.textAlign = "center";
+    ctx.fillText(text, 50, canvas.height -50);
+      const link = document.createElement("a");
+      link.download = "image.jpg";
+      link.href = croppedCanvas.toDataURL();
+      link.click();
+    }else{
+      const link = document.createElement("a");
+      link.download = "image.jpg";
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+}
+
+// Function to enable drawing mode and hide other options
+const enableDrawingMode = () => {
+    document.querySelector(".editor-panel").style.display = "none";
+    drawingContainer.style.display = "block";
+    isDrawing = true;
+}
+
+
+// Function to disable drawing mode and show other options
+const disableDrawingMode = () => {
+    drawingContainer.style.display = "none";
+    document.querySelector(".editor-panel").style.display = "block";
+    isDrawing = false;
+}
+
+// Add a new event listener for the preview image
+    previewImg.addEventListener("click", () => {
+        if (drawingContainer.style.display === "block") {
+            disableDrawingMode();
+        }
+    });
+// Add a new event listener for the "Draw" button
+ document.getElementById("draw").addEventListener("click", enableDrawingMode);
+
+filterSlider.addEventListener("input", updateFilter);
+resetFilterBtn.addEventListener("click", resetFilter);
+saveImgBtn.addEventListener("click", saveImage);
+// Add event listener for the file input change
+    fileInput.addEventListener("change", () => {
+        loadImage(); // Load the chosen image
+        disableDrawingMode(); // Disable drawing mode when a new image is chosen
+    });
+chooseImgBtn.addEventListener("click", () => fileInput.click());
+// Drawing Functionality
+    const drawButton = document.getElementById("draw");
+    const drawingContainer = document.querySelector(".drawing-container");
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const colorPicker = document.getElementById('colorPicker');
+    const thicknessInput = document.getElementById('thickness');
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    function startDrawing(e) {
+      isDrawing = true;
+      lastX = e.offsetX;
+      lastY = e.offsetY;
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+        console.log(ctx.strokeStyle,'ctx.strokeStyle')
+        console.log(ctx.lineWidth,'ctx.strokeStyle')
+
+      ctx.strokeStyle = colorPicker.value;
+      ctx.lineWidth = thicknessInput.value;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+
+      lastX = e.offsetX;
+      lastY = e.offsetY;
+    }
+
+    function stopDrawing() {
+      isDrawing = false;
+    }
+    // Define the drawing canvas and context
+  const canvasDrawing = document.getElementById('canvas');
+  const ctxDrawing = canvasDrawing.getContext('2d');
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    // Function to clear the drawing canvas
+      const clearDrawingCanvas = () => {
+        ctxDrawing.clearRect(0, 0, canvasDrawing.width, canvasDrawing.height);
+      }
+
+    // Function to save the edited image with the drawing changes
+    const saveDrawingChanges = () => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = previewImg.naturalWidth;
+        canvas.height = previewImg.naturalHeight;
+
+        // Draw the original image on the canvas
+        ctx.drawImage(previewImg, 0, 0);
+
+        // Draw the content from the drawing canvas on the canvas
+        ctx.drawImage(canvasDrawing, 0, 0);
+
+        const link = document.createElement("a");
+        link.download = "image_with_drawing.jpg";
+        link.href = canvas.toDataURL();
+        link.click();
+        // Hide the drawing canvas after saving the drawing changes
+        drawingContainer.style.display = "none";
+    }
+
+    // Add a new event listener for the "Save Drawing Changes" button
+    document.getElementById("save-drawing").addEventListener("click", saveDrawingChanges);
+
+  // Add a new event listener for the "Reset Drawing" button
+  document.getElementById("reset-drawing").addEventListener("click", clearDrawingCanvas);
+    
+    // Add a new event listener for the "Draw" button
+    document.getElementById("draw").addEventListener("click", () => {
+        document.querySelector(".editor-panel").style.display = "none";
+        drawingContainer.style.display = "block";
+    });
+
+    //text area code 
+     function toggleInputField() {
+            var inputText = document.getElementById("inputText");
+            if (inputText.style.display === "none") {
+                inputText.style.display = "inline-block";
+            } else {
+                inputText.style.display = "none";
+            }
+            applyTextColor();
+        }
+
+        function addText() {
+            var inputText = document.getElementById("inputText");
+            var displayArea = document.getElementById("displayArea");
+            displayArea.textContent = inputText.value;
+            inputText.value = "";
+            inputText.style.display = "none";
+            applyTextColor();
+        }
+
+        function removeText() {
+            var displayArea = document.getElementById("displayArea");
+            displayArea.textContent = "";
+
+            var inputText = document.getElementById("inputText");
+            inputText.value = "";
+            inputText.style.display = "none";
+        }    
+
+         // Function to apply the selected text color to the displayed text on the preview image
+      const applyTextColor = () => {
+        const displayArea = document.getElementById("displayArea");
+        const textColorPicker = document.getElementById("textColorPicker");
+        displayArea.style.color = textColorPicker.value;
+      }
+
+       // Add a new event listener for the color input element
+      const textColorPicker = document.getElementById("textColorPicker");
+      textColorPicker.addEventListener("input", applyTextColor);
+
+
+         
+ </script>
+</html>
+
+</apex:page>

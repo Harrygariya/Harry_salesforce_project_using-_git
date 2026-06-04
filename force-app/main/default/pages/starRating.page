@@ -1,0 +1,263 @@
+<apex:page >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+// 1. Google CDN for jQuery
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+// 2. Microsoft CDN for jQuery
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+
+// 3. jQuery CDN for jQuery
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #page_wrapperId{
+            font-size: 0.9rem;
+        }
+        #page_wrapperId .hated_css {
+            width: 50%;
+            text-align: left;            
+        }
+        #page_wrapperId .loved_css {
+            width: 50%;
+            text-align: right;
+        }
+        #page_wrapperId #feedbackStarDiv{
+            padding: 30px 15px;
+            text-align: center;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }        
+        #page_wrapperId .head_top{
+            font-size: 1.8rem;
+        }
+        #page_wrapperId .question_cls{
+            padding: 0px;
+            font-size: 16px;
+        }
+        #page_wrapperId #negReview{
+            width: 100%;
+            padding: 15px;
+        }
+        #page_wrapperId .ratting_topup{
+            padding: 15px 8px;
+            border: 1px solid #aaa;
+            margin: 32px 10px;
+            border-radius: 4px;
+            font-size: 16px;
+            background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.025) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.025) 50%, rgba(0, 0, 0, 0.025) 75%, transparent 75%, transparent);
+            background-size: 64px 64px;
+            color: white;
+            background-color: rgba(0, 158, 0, 0.8509);
+        }
+        
+         #star1::before { 
+          content: "Hated it!";
+          position: absolute;
+          top: 37px;
+          white-space: nowrap;
+          pointer-events: none;
+        }
+
+        #star5::after { 
+          content: "Loved it!";
+          position: absolute;
+          top: 37px;
+          margin-left: -30px;
+          white-space: nowrap;
+          pointer-events: none;
+        }
+        #page_wrapperId .rating-stars ul {
+            list-style-type:none;
+            padding:0;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+            position : relative;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+        #page_wrapperId .rating-stars ul > li{
+            margin-left: 0;
+        }
+        #page_wrapperId .rating-stars ul > li.star {
+            display:inline-block;
+          
+        }
+        #page_wrapperId .rating-stars ul > li.star > i.fa {
+            font-size:2.5rem; 
+            color:#ccc;
+        }
+        #page_wrapperId .rating-stars ul > li.star.hover > i.fa {
+            color:#FFCC36;
+        }
+        #page_wrapperId .rating-stars ul > li.star.selected > i.fa {
+            color:#FF912C;
+        }
+        #page_wrapperId .moodWrapper .sad, #page_wrapperId .moodWrapper .Moderately_sad, #page_wrapperId .moodWrapper .Neutral, #page_wrapperId .moodWrapper .Moderately_Happy, #page_wrapperId .moodWrapper .Happy{
+            max-width: 80px;
+            margin-bottom: 1rem;
+        }
+        #page_wrapperId .moodWrapper .sad, #page_wrapperId .moodWrapper .Moderately_sad, #page_wrapperId .moodWrapper .Neutral, #page_wrapperId .moodWrapper .Moderately_Happy, #page_wrapperId .moodWrapper .Happy{
+            display: none;
+        }
+        #page_wrapperId .main_div{
+            font-size: 14px;
+            font-weight: bolder;
+            width: 34%;
+            margin: auto;
+            display: flex;                        
+        }
+        #page_wrapperId textarea.form-control {
+            height: 100px !important;
+        }
+    </style>
+   <apex:form >
+       <div id="page_wrapperId">
+            <div id="feedbackStarDiv" style = "display:block">
+                <div style="width: 100%">
+                    <div class="moodWrapper">
+                    <apex:image url="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPwAAADICAMAAAD7nnzuAAAAkFBMVEX29vbm0Br29vj29vXlzgD29/vmzxD5+fX29fb6+fLm0Bv4+ff39vrlzwD5+fb6+e759dfk0TT6+Orn11b6+Obq22zjzyLu44n59+Dz66r07LDy6KHv5I/599338cbl00Lp2mLm1Uzs4H/w5pf18Lzr3XPx66718Mj49NHp2mXs4YPl0jvz7bzr3XDhzSns5aqnJC0QAAAJgUlEQVR4nO2d63qyOhCFYQghHKyKiOczVlqt+/7vbidg+1mLCBTIFFz91+dReVmZYchRUZ566qmnnnrqqaeeeqosMSb7CqQKQPYVyBOE49bSM3u4bS08hKq/aC39vkNGoGhKCxMfhL4qrG8hOo/4PVVVMmrjE0+D0FJVtaVRD8J4Yb0u+0rqFlOgFxnfRus1Rdl2Yngybxs8N96P2VV6bluZx5R3eoFvn/X/jP+0XpN9SbWJwZZ8wQvr2/Soh8U/47n1/VZFPYyujOfW79oCz1s4jK+NF1HvtYX+h/HCer0dr3ZMg/GZfoen/dZYD/Mb41sU9bC4Nb5F1icY3w7rRar3fhqvWrTvQrNzXgSnJxkfJ/xGS+N/P1N9i6IedonGc+tnjYcHr59oPLf+6DacXrtrvLC+0VHPUowX1jc86vX7xjfeevCOd43n1q8aHfX6LMV4bv2kmdZH9Q249yM+jvpuI4s8TYzIPTA+tl5rYFcmZwJ3lWp8FPWNtJ5LnzwwvrFRzzIYL6zvNjPhZzBeWN9IeNZ9bHxsffPCnmUyvqFRD5mM59ZvGvish2km47n106ZZz6C7yWS8sN50GjZom9l4Ts+tZ6wh9Ez0YWQ2nsMPGhb1enbjGxb1TGNmduOjqG+M9eJ1LshhvLDekX3RpYlBLuObZX1e47n1QWOinpmDXMaLhN8Y6/VTPuOtxljPChh/sf6Pmy8uH/QgNzunD/5+wudFKjPWReAHxh83PlLeiL+oCVHPHGG8VcR68292aIk3Mo0xAB0Uu0jER/SBYTNdh6slOFqUPxUFbypkEbWuG25vOZ0PN/5jzmRZx/X75BSOu/zbHBA3AS2zUOS1bbrjw3T+MTj6lBBa0HfxtKe0Q4h1Xr1tZ6eF1zVAdxjCpVicmss2x8vpbrs+WkRQF8a+wH8mCv5N/Ov8zXA+C0LXUKLfQnAPRBPnLdzujsPTbMu9tijp/Jb6wn77D9EOqN/fvI1eDz3PFL8LtbSDS5/S1U9xrx0dXky3F8y269WZm1MSdbpoHAv9zXA0WY67ps0DDT5vgnZ1raV1g319N7u0cB0MLwwm8+GqlBZe6B6IWDhv9rvXU899gcpiIWaPk7hier3DZDTc9P3SWvivbkKHqP5xMJy/HhZXsVDebYiTuMHT2WS+H/QlmZ2iuB3we7Dn92BsvigiFkrg5w9X210cgt1+cOY/goz6u2j8aO0P9rvgsHC13+Oz7v4o0tkvntg1i0ZX6w9/3R8iZkmH/UJvJnJFNgsoI+HrvbT5YzjV2ZS1Wk3vZRtgxSMy8ERfSCk5/6/Rk3WZE1n1xaYjmyi7ymVXFGf8d+jJ2i2z1uNpUx8P/kjOJ2/lz+AF72/Qk6GY0VRmla9F9Os/QE8+uqU832/luPjpyUdV41zgviGnJ/uKJnCKN8XuEDU92VbW3S1CqfuBmD5mr26fMUBMX6HvQtx7MPdI6cm7UfEQD9PA3KKkJ6Oq2YVw0pP5Sy1De2C8o6Pn7EzRSui4eihm3G74IVt0Z9c2hMNektfAy1J97Ew8Se05ot4NOlPqG8EVvZpa2qLYehWx1zpmz+wZFu8nOlNqhncABT2lEynD1RjoqSqFnWc9mMgdxbE4+1SK72JyELyqUumpNQWIHj/1w2sKTGXSUysQvktbjQNTSxo99QO5U3MYBL4kesEucwmWeJOQRU/PSzE/VR6+FmW9kwx66i91uW0+riphWT/9xXf5Yvoyea+vamRF7Acc7Fz6IX0XlLJF+6HcNv9PYt1cWCe9YJcNfSVWJ33MjsL5eMqnpod1Tdyhx56uINtNp66pK3TVw9TmhUTcL+qgp6uFg25nAVHr1UAfsaMI91s543zrhQuwR9PrsMFHS4qA01farUk4e9TkseELac44/8rR7KID1IcAMCesEJ4gqeeTFM1aKrZ8MiP8BPcu+NEGnwXWT2YS3eqoN9DR91XG/BpzyCvMqDThod4dlUV7+lbV6lXV72FYTHhPlzPoqhLmdF94rXxmeNR75aVs412GOlvZgCliSpXJXpR49c0+ySumGNW+2dAz4u1zwC28U0A2WT28zzoIq2VXKdpdRDRFn1b8Pk92WLqsfyp16/4y1EF7cLcWnzFcpTDvEJljo8uC8HgPuwHvXC07p0eb7qFXee8tOWFN97m2OC0Ij/ZwMxhV32//IRvynqDI3m854TdId4pjZg3jVViPsIVx5cmeV/cHnGf6Ocvq2dFuBV1DsucFLtIjy2Few/4CdIiyP4O9VJ/sRfe1KRs0ScysZ1qOJxs0SeDVwk4ODsJ2D8talhzh7L7OeE7Nr+FHKOHfi2xsnP8Tbza+KqfIrs7k3CefH8o6ziVOdcM1CU9MyEk9fjIRwx+Nvd2Z5PyYv0BX5mjQy9dn37H2PbGL63jk58sV5IAMXmypcMjDQOkwBIg+B71trtAXh7ohC3oGj86fvEbvvB3si3+awN/nWKZE0XVfMwbbrNdP6eBkfKtUwD4MM+OjG61kGrMzTkihZDM1b8ddGNjLdcbMR/vo+u7ZgyNnv9BXEzNxbgkYwSAbvt+TuqQsQRBmSPaUHCeufmcRJNPNYJNlcS6+0Uonwx7+pL9z9Shb/YCP/sug+7rpPPwefOd1PzxsmJdzcw8eJGqmu7Pjo8ZPtnY9TJllb9O7caj1vsiyBTM4n0Xf3XoX3fFGDw7qodY28xQ6AG9+TmtG9IzszGae7FOuVh2GNmSbNhsd+wOL1Jq3g2y0MmWMkpL10s4xc1Ls+pJe8yI74oYlH8pmCfRBYBToeAKl96HecZ/OUcHfm5BC6Sb4Uc5lExM1b7L79AMZ/EfCZYpyrguFVwRp8LJcJ1U9yEYrWcLsQ17OzdzfTZ4SRV9SzXtGNVoJ3o9F5MTfeXHrFPxFinFxNAXHn65+4NMQFfztuiJyHo0flXPZxPTu5BY/mpyC5uXmJtl3/O2iHHQhUfP2v+GTeVnfXYa+TTWn6j6M0lxp5wvxom93XfSJ7ms8Kwvt4ZcxonfOvvPuVljse81Lj4iqe2Z8TkihlJdzDit5yyaxtyWved+/al4f0VxE5vmXp1uxci6brmteRItt4BCjx71z1aVhsMNhVPVQRKOV+oRGXVTdqieEi5pXFH2dEZZdMzj8nETlXNW/E63WfTmtSecNTYHLjLd/5VyVFxV/t2MGmyOa/gxm/ldiTfNIGvCi74So774+9M++nvp+76Hw2CBJ9d0ANK80EhTfZYQH1D711FNPPfXUU4j0P+CMpVTrvTueAAAAAElFTkSuQmCC" styleClass="sad"/>
+                        
+                    </div> 
+                    <input type = "text" id ="fdrvNo" value = '0' style = "display:none"/>
+                    <div class='rating-widget'>
+                        <div class='rating-stars text-center'>
+                            <ul id='stars'>
+                                <li class='star' title='Poor' data-value='1' id="star1">
+                                    <i onclick = "feedBackfn(1)" class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Fair' data-value='2' id="star2">
+                                    <i onclick = "feedBackfn(2)" class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Good' data-value='3'>
+                                    <i onclick = "feedBackfn(3)" class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Excellent' data-value='4'>
+                                    <i onclick = "feedBackfn(4)" class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='WOW!!!' data-value='5' id="star5">
+                                    <i onclick = "feedBackfn(5)" class='fa fa-star fa-fw'></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                   
+                    <div class='rating-widget'>
+                        <div class='rating-stars text-center'>
+                            <ul id='stars'>
+                                <li class='star' title='Poor' data-value='11' id="star11">
+                                    <i onclick = "feedBackfn(11)" class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Fair' data-value='21' id="star21">
+                                    <i onclick = "feedBackfn(21)" class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Good' data-value='31'>
+                                    <i onclick = "feedBackfn(31)" class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='Excellent' data-value='41'>
+                                    <i onclick = "feedBackfn(41)" class='fa fa-star fa-fw'></i>
+                                </li>
+                                <li class='star' title='WOW!!!' data-value='51' id="star5">
+                                    <i onclick = "feedBackfn(51)" class='fa fa-star fa-fw'></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                 <!--  
+                    <div id = "negReview" style="display:none;">
+                        <div class="question_cls form-group">Thank you so much for taking the time to provide your feedback. Your account rep will be in touch shortly to discuss the areas we can improve upon.</div>
+                        <div class="form-group">
+                            <apex:inputTextarea styleClass="review form-control" html-maxlength="1000" rows="2" cols="10"></apex:inputTextarea>
+                        </div>
+                        <button type="button" class="btn btn-blue" onclick = "return submitReview();" >Submit</button>
+                    </div>
+                    <div id= "posReview" style="display:none;">
+                        <div class="ratting_topup">
+                            You know, these kinds of ratings really help prospective customers to feel more confident in choosing us. If you don’t mind writing what you just rated in a quick review on [<a href = "#" target="_blank" onclick="linkClickedFn(true);">App exchange Link</a>], that would be awesome.
+                        </div>
+                        <button type="button" class="btn btn-blue" onclick = "mayBeLater();">May be Later</button>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>    
+    </apex:form>
+        <script>
+            $(document).ready(function(){
+            $('#stars li').on('mouseover', function(){
+                var onStar = parseInt($(this).data('value'), 10); 
+                $(this).parent().children('li.star').each(function(e){
+                    if (e < onStar) {
+                        $(this).addClass('hover');
+                    }
+                    else {
+                        $(this).removeClass('hover');
+                    }
+                });
+                
+            }).on('mouseout', function(){
+                $(this).parent().children('li.star').each(function(e){
+                    $(this).removeClass('hover');
+                });
+            });
+              
+            $('#stars li').on('click', function(){
+                var onStar = parseInt($(this).data('value'), 10); 
+                var stars = $(this).parent().children('li.star');
+                for (i = 0; i < stars.length; i++) {
+                  $(stars[i]).removeClass('selected');
+                }
+                for (i = 0; i < onStar; i++) {
+                  $(stars[i]).addClass('selected');
+                }
+            });
+        });
+
+        function feedBackfn(feedStars){
+            $('#fdrvNo').val(feedStars);
+            if(feedStars >4){
+                $("#posReview").css("display", "block");
+                $("#negReview").css("display", "none");
+            }
+            else{
+                $("#negReview").css("display", "block");
+                $("#posReview").css("display", "none");
+            }
+            if(feedStars == 1){
+                $('.moodWrapper .Moderately_sad, .moodWrapper .Neutral, .moodWrapper .Moderately_Happy, .moodWrapper .Happy').hide();
+                $('.moodWrapper .sad').show()
+            }else if(feedStars == 2){
+                $('.moodWrapper .sad, .moodWrapper .Neutral, .moodWrapper .Moderately_Happy, .moodWrapper .Happy').hide();
+                $('.moodWrapper .Moderately_sad').show()
+            }else if(feedStars == 3){
+                $('.moodWrapper .sad, .moodWrapper .Moderately_sad, .moodWrapper .Moderately_Happy, .moodWrapper .Happy').hide();
+                $('.moodWrapper .Neutral').show()
+            }else if(feedStars == 4){
+                $('.moodWrapper .sad, .moodWrapper .Moderately_sad, .moodWrapper .Neutral, .moodWrapper .Happy').hide();
+                $('.moodWrapper .Moderately_Happy').show()
+            }else if(feedStars == 5){
+                $('.moodWrapper .sad, .moodWrapper .Moderately_sad, .moodWrapper .Neutral, .moodWrapper .Moderately_Happy').hide();
+                $('.moodWrapper .Happy').show()
+            }else if(feedStars == 11){
+                $('.moodWrapper .sad, .moodWrapper .Moderately_sad, .moodWrapper .Neutral, .moodWrapper .Moderately_Happy').hide();
+                $('.moodWrapper .Happy').show()
+            }
+            else if(feedStars == 21){
+                $('.moodWrapper .sad, .moodWrapper .Moderately_sad, .moodWrapper .Neutral, .moodWrapper .Moderately_Happy').hide();
+                $('.moodWrapper .Happy').show()
+            }
+            else if(feedStars == 31){
+                $('.moodWrapper .sad, .moodWrapper .Moderately_sad, .moodWrapper .Neutral, .moodWrapper .Moderately_Happy').hide();
+                $('.moodWrapper .Happy').show()
+            }
+            else if(feedStars == 41){
+                $('.moodWrapper .sad, .moodWrapper .Moderately_sad, .moodWrapper .Neutral, .moodWrapper .Moderately_Happy').hide();
+                $('.moodWrapper .Happy').show()
+            }
+            else if(feedStars == 51){
+                $('.moodWrapper .sad, .moodWrapper .Moderately_sad, .moodWrapper .Neutral, .moodWrapper .Moderately_Happy').hide();
+                $('.moodWrapper .Happy').show()
+            }
+        }
+       
+    </script>
+</apex:page>

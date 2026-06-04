@@ -1,0 +1,75 @@
+<template>
+        <span class="myconatiner"></span>
+    <lightning-card variant="Narrow" title="Hello" icon-name="standard:account">
+        <span>this is  { namevalue}</span>
+        <lightning-button-icon icon-name="utility:down" variant="border-filled" alternative-text="Show More"
+            slot="actions"></lightning-button-icon>
+        <lightning-layout multiple-rows="">
+            <lightning-layout-item size='6' padding="around-small">
+                <lightning-input type="email" label="Email Address" value={emailvalue} onchange={handleEmailChange}>
+                </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size='6' padding="around-small">
+                <lightning-input type="test" name="name" label="name" value={namevalue} onchange={handlenameChange}>
+                </lightning-input>
+
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout multiple-rows="">
+            <lightning-layout-item size='6' padding="around-small">
+                <lightning-input type="tel" name="mobile" label="Mobile" value={mobilevalue}
+                    onchange={handleMobileChange}>
+                </lightning-input>
+
+            </lightning-layout-item>
+            <lightning-layout-item size='6' padding="around-small">
+                <lightning-button variant="Neutral" label="Cancel" class="slds-m-left_x-small" onclick={handleCancel}>
+                </lightning-button>
+                <lightning-button variant="brand" class="slds-m-left_x-small" label={ClickToAge} onclick={handleNext}>
+                </lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+        
+        <lightning-layout-item size='6' padding="around-small" if:true={show}>
+            <lightning-input type="tel" name="mobile" label="age" 
+                    onchange={handleMobileChange}>
+                </lightning-input>
+            </lightning-layout-item>
+        </lightning-card>
+
+        <lightning-card>
+            
+            <div><h2><b>Example Of Setter</b></h2>
+                <lightning-input  onchange={handleChangetoSetter}> subrata</lightning-input> 
+
+                <h1>{first}</h1>
+            </div>
+        </lightning-card>
+
+  
+    <lightning-card class="testfrm">
+        <lightning-layout horizontal-align="space"> 
+            <lightning-layout-item padding="around-small" margin="around-small">
+                <lightning-avatar size="large"   src="https://www.lightningdesignsystem.com/assets/images/avatar2.jpg" initials="CR" fallback-icon-name="standard:person_account" alternative-text="Cindy Rice" class="slds-m-right_small"></lightning-avatar>
+
+                <lightning-input  name="firstname" label="first name"  onchange={handleChange}>
+                </lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <lightning-avatar size="large"   src="https://www.lightningdesignsystem.com/assets/images/avatar2.jpg" initials="CR" fallback-icon-name="standard:person_account" alternative-text="Cindy Rice" class="slds-m-right_small"></lightning-avatar>
+
+                <lightning-input name="lastname" label="last name"  onchange={handleChange}>
+                </lightning-input>
+            </lightning-layout-item>
+            <lightning-card padding="around-small">
+                <div class="slidein" >
+                    <h2><p>Your beautify name </p> <div class="threeD" style="font-size: 2.2rem;">{fullnameDisplay}</div></h2>
+                </div>
+                
+
+             
+            </lightning-card>
+            
+        </lightning-layout>
+    </lightning-card>
+</template>

@@ -1,0 +1,18 @@
+<template>
+    <lightning-card  title="Hello">
+        <div style="max-height:300px ;overflow:auto">
+            <template for:each={message} for:item="msg">
+                <p key={msg.id} id={msg.id} data-id={msg.id}>
+                    {msg.text}
+                </p>
+        
+            </template>
+        </div>
+   
+
+</lightning-card>
+<lightning-input onkeyup={getmethod}></lightning-input>
+<lightning-button data-id="msg67" label="Quote Message" onclick={handleQuoteMessage}></lightning-button>
+
+
+</template>
