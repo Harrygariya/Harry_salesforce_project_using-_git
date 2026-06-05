@@ -14,7 +14,7 @@ export default class ImperativeMethodDemoHarry extends LightningElement {
     
     connectedCallback(){
         ImpretiveDemoClassList().then(result=>{
-            console.log(result,result);
+            console.log('this the real result',result);
             this.data = result;
         })
         .catch(error=>{
