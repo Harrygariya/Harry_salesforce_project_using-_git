@@ -4,7 +4,7 @@ export default class Childoneamit extends LightningElement {
     @api sendtochild;
     constructor(){
         super();
-        console.log(' 222 child constructor is call')
+        console.log(' first call is -----when class call --constructor is call automatic----> child constructor is call')
     }
     connectedCallback(){
 
